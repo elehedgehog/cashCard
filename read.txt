@@ -1,0 +1,10 @@
+
+repayment 还款页面
+
+changeCard  换卡
+
+confirmBorrow 确认还款
+
+operator 运营商拉报告页面
+
+operatorSuccess  运营商拉取成功页面

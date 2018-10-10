@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>还款页面</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/repayment.css"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"><script type="text/javascript" src="../js/rem.js" ></script>
+    <script type="text/javascript" src="../js/jquery-1.11.1.min.js" ></script>
+    <script type="text/javascript" src="../js/common.js" ></script>
+    <script src="../js/mui.min.js"></script>
+   
+</head>
+<body>
+    <!-- <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">还款页面</h1>
+    </header> -->
+    <div class="mui-content" id="content">
+        <div class="content-top">
+            <p class="title">本期应还金额</p>
+            <p class="money"><span class="amount-money">1007 </span>元</p>
+            <!-- <p class="form-title">本期应还金额由以下构成：</p>
+            <p class="form-content">
+                <span>本金：1000元</span>
+                <span>利息：7.9元</span>
+                <span>逾期罚息：0.0元</span>
+            </p> -->
+        </div>
+        <div class="borrower">借款人：张三</div>
+        <div class="borrower-card">
+            <p class="card-bind">已绑定银行卡号：</p>
+            <p class="card-msg">招商银行：
+                <span class="card-number">6225*****9188</span>
+                <span class="change-card">换卡></span>
+            </p>
+        </div>
+        <div class="button" align="center">
+            <button class="repayment-btn" align="center">立即还款</button>
+        </div>
+        <!-- 验证码弹框 -->
+        <div class="code-popup">
+            <div class="code-popup-content">
+                <p class="pop-header">输入手机验证码  <span class="closeIcon"></span></p>
+                <div class="pwd-box">
+                    <input type="tel" maxlength="6" class="pwd-input" id="pwd-input">
+                    <div class="fake-box">
+                        <input type="text" readonly="" class="code-input" id="codeOne">
+                        <input type="text" readonly="" class="code-input" id="codeTwo">
+                        <input type="text" readonly="" class="code-input" id="codeThree">
+                        <input type="text" readonly="" class="code-input" id="codeFour">
+                        <input type="text" readonly="" class="code-input" id="codeFive">
+                        <input type="text" readonly="" class="code-input" id="codeSix">
+                    </div>
+                </div>
+                <p class="code-popup-send">已向您在银行预留手机号发送验证码，
+                    <span class="resent-btn"><span id="coundDown">60s</span>后可重新发送重新</span>
+                    <span class="get-code">获取验证码</span>
+                </p>
+
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- loading弹框 -->
+    <div class="loading">
+        <div class="image-loading">
+            <img src="../images/loading.gif" alt="">
+        </div>
+    </div>
+</body>
+<script>
+    
+	var count = 60;         //60秒倒计时
+    var timer = undefined
+    
+    $('.closeIcon').on('click',function(){
+		$('.code-popup').hide();
+		 $('.loading').hide();
+	})
+
+    //获取验证码接口
+    function getVerificationCode() {  
+        $('.loading').show()   //显示loading加载图
+        $.ajax({
+            type: 'POST',
+            url: 'fzz.php', //请求地址
+            dataType: 'json',
+            data:{},
+            success:function(data){
+                $('.loading').show()   //隐藏loading加载图
+                //请求成功函数内容
+                 if (data.code == "0000") {//状态码正确的时候执行跳转
+                    
+                } else { //状态码错误的时候弹框
+                    mui.toast(data.msg);
+				}
+            },
+            error:function(jqXHR){
+                $('.loading').hide()   //隐藏loading加载图
+                //请求失败函数内容
+                mui.toast('网络错误');
+            }
+        });
+    }
+
+    //验证验证码接口
+    function verificationCode() {  
+        $('.loading').show()   //显示loading加载图
+        $.ajax({
+            type: 'POST',
+            url: '', //请求地址
+            dataType: 'json',
+            data:{},
+            success:function(data){
+                //请求成功函数内容
+                $('.loading').hide()   //隐藏loading加载图
+                var inputCode = null     //用户输入验证码的值 
+                inputCode = $('#codeOne').val() + $('#codeTwo').val()+ $('#codeThree').val()+ $('#codeFour').val()+ $('#codeFive').val()+ $('#codeSix').val()
+                console.log(inputCode)
+                if (data.code == "0000") {//状态码正确的时候执行跳转
+                   
+                } else { //状态码错误的时候弹框
+                    mui.toast(data.msg);
+				}
+            },
+            error:function(jqXHR){
+                $('.loading').hide()   //隐藏loading加载图
+                //请求失败函数内容
+                mui.toast('网络错误');
+            }
+        });
+    }
+
+
+
+    $('.repayment-btn').on('click', function() {  //立即还款按钮
+        $('.get-code').click()  //先执行一次获取验证码按钮的行为
+        if (!timer) {
+			countDown();
+			timer = setInterval(countDown, 1000);
+		}
+        $('.code-popup').show()
+    })
+
+    var $input = $(".fake-box input");
+    $("#pwd-input").on("input", function() {
+        var pwd = $(this).val().trim();
+        for (var i = 0, len = pwd.length; i < len; i++) {
+            $input.eq("" + i + "").val(pwd[i]);
+        }
+        $input.each(function() {
+            var index = $(this).index();
+            if (index >= len) {
+                $(this).val("");
+            }
+        });
+        if (len == 6) {  //输入第六位验证码后执行的操作
+            console.log('执行验证码校验接口')
+            verificationCode()  //执行验证码校验接口
+            
+        }
+    });
+
+    function countDown() { //倒计时
+		if (count > 1) {
+			count--;
+			$('#coundDown').text(count + '秒');
+
+		} else {
+			clearInterval(timer);
+			timer = undefined;
+			count = 60;
+			$('.resent-btn').hide();
+			$('.get-code').show();
+		}
+    }
+
+    $('.get-code').on('click', function() {  //获取验证码按钮
+        getVerificationCode()  //执行验证码获取接口
+        $('.code-input').val("");
+        $("#pwd-input").val("");
+		$('.resent-btn').show();
+        $('.get-code').hide();
+        console.log('//执行获取验证码接口')
+        if (!timer) {
+			countDown();
+			timer = setInterval(countDown, 1000);
+		}
+    })
+
+    $('.change-card').on('click', function() {
+        window.location.href = './changeCard.html'
+    })
+</script>
+</html>

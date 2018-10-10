@@ -1,0 +1,206 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../js/rem.js" ></script>
+    <title>换卡</title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/changeCard.css" />
+    
+</head>
+<body>
+	<!-- <header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">添加新卡</h1>
+	</header> -->
+	
+	<div class="mui-content" id="content">
+		<div class="inputListModule">
+			<div class="input-item">
+				<div class="input-info">请输入新的银行卡号:</div>
+				<input id="bankCardNum" placeholder="请输入银行卡号"/>
+			</div>
+			<div class="input-item">
+				<div class="input-info">请输入在银行预留手机号:</div>
+				<input id="phoneNUm" maxlength="11" onkeyup="this.value=this.value.replace(/\s+/g,'')" placeholder="请输入手机号"/>
+			</div>
+			<div class="tips"><span>*</span> 必须是借款人本人的银行卡号</div>
+		</div>
+		
+		<!-- 验证码弹框 -->
+        <div class="code-popup">
+            <div class="code-popup-content">
+            	
+                <p class="pop-header">输入手机验证码  <span class="closeIcon"></span></p>
+                <div class="pwd-box">
+                    <input type="tel" maxlength="6" class="pwd-input" id="pwd-input">
+                    <div class="fake-box">
+                        <input type="text" readonly="" class="code-input" id="codeOne">
+                        <input type="text" readonly="" class="code-input" id="codeTwo">
+                        <input type="text" readonly="" class="code-input" id="codeThree">
+                        <input type="text" readonly="" class="code-input" id="codeFour">
+                        <input type="text" readonly="" class="code-input" id="codeFive">
+                        <input type="text" readonly="" class="code-input" id="codeSix">
+                    </div>
+                </div>
+                <p class="code-popup-send">已向您在银行预留手机号发送验证码，<span id="coundDown">60s</span>后可重新发送</p>
+                <div align="center">
+                    <button class="get-code">获取验证码</button>
+                </div>
+            </div>
+        </div>
+		<!-- loading弹框 -->
+	    <div class="loading">
+	        <div class="image-loading">
+	            <img src="../images/loading.gif" alt="">
+	        </div>
+	    </div>
+	    
+		<div class="btnModule">
+			<button onclick="submitMsg()">提  交</button>
+		</div>
+	</div>
+	
+</body>
+
+
+<script src="../js/mui.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+	mui.init();
+	var phoneCheck=/^[1][3,4,5,7,8][0-9]{9}$/;
+	var bandCardCheck =/^[a-zA-Z0-9]{7,30}$/;
+	var count = 60;         //60秒倒计时
+    var timer = undefined
+	
+	function submitMsg() {
+		var bankCardNum = $('#bankCardNum').val().replace(/\s+/g, "");
+		var phoneNUm = $('#phoneNUm').val().replace(/\s+/g, "");
+		if(!bankCardNum){
+			mui.toast('请输入银行卡号!');
+		}else if(!bandCardCheck.test(bankCardNum)){
+			mui.toast('请输入正确的银行卡号!');
+		}else if(!phoneNUm){
+			mui.toast('请输入手机号!');
+		}else if(!phoneCheck.test(phoneNUm)){
+			mui.toast('请输入正确的手机号!');
+		}else{
+			console.log('去获取验证码');
+		  	$('.get-code').click()  //先执行一次获取验证码按钮的行为
+	        if (!timer) {
+				countDown();
+				timer = setInterval(countDown, 1000);
+			}
+	        $('.code-popup').show()
+		}
+	}
+	
+	$('.closeIcon').on('click',function(){
+		$('.code-popup').hide();
+		 $('.loading').hide();
+	})
+
+    //获取验证码接口
+    function getVerificationCode() {  
+        $('.loading').show();   //显示loading加载图
+        $.ajax({
+            type: 'POST',
+            url: 'fzz.php', //请求地址
+            dataType: 'json',
+            data:{},
+            success:function(data){
+                $('.loading').show()   //隐藏loading加载图
+                //请求成功函数内容
+                 if (data.code == "0000") {//状态码正确的时候执行跳转
+                    
+                } else { //状态码错误的时候弹框
+                    mui.toast(data.msg);
+				}
+            },
+            error:function(jqXHR){
+                $('.loading').hide()   //隐藏loading加载图
+                //请求失败函数内容
+                mui.toast('网络错误');
+            }
+        });
+    }
+    
+    //验证验证码接口
+    function verificationCode() {  
+        $('.loading').show()   //显示loading加载图
+        $.ajax({
+            type: 'POST',
+            url: '', //请求地址
+            dataType: 'json',
+            data:{},
+            success:function(data){
+                //请求成功函数内容
+                $('.loading').hide()   //隐藏loading加载图
+                if (data.code == "0000") {//状态码正确的时候执行跳转
+                   
+                } else { //状态码错误的时候弹框
+                    mui.toast(data.msg);
+				}
+            },
+            error:function(jqXHR){
+                $('.loading').hide()   //隐藏loading加载图
+                //请求失败函数内容
+                mui.toast('网络错误');
+            }
+        });
+    }
+
+
+    var $input = $(".fake-box input");
+    $("#pwd-input").on("input", function() {
+        var pwd = $(this).val().trim();
+        for (var i = 0, len = pwd.length; i < len; i++) {
+            $input.eq("" + i + "").val(pwd[i]);
+        }
+        $input.each(function() {
+            var index = $(this).index();
+            if (index >= len) {
+                $(this).val("");
+            }
+        });
+        if (len == 6) {  //输入第六位验证码后执行的操作
+            console.log('执行验证码校验接口')
+            verificationCode()  //执行验证码校验接口
+            var inputCode = null     //用户输入验证码的值 
+            inputCode = $('#codeOne').val() + $('#codeTwo').val()+ $('#codeThree').val()+ $('#codeFour').val()+ $('#codeFive').val()+ $('#codeSix').val()
+            console.log(inputCode)
+        }
+    });
+
+    function countDown() { //倒计时
+		if (count > 1) {
+			count--;
+			$('#coundDown').text(count + '秒');
+
+		} else {
+			clearInterval(timer);
+			timer = undefined;
+			count = 60;
+			$('.code-popup-send').hide();
+			$('.get-code').show();
+		}
+    }
+
+    $('.get-code').on('click', function() {  //获取验证码按钮
+        getVerificationCode()  //执行验证码获取接口
+        $('.code-input').val("");
+        $("#pwd-input").val("");
+		$('.code-popup-send').show();
+        $('.get-code').hide();
+        console.log('//执行获取验证码接口')
+        if (!timer) {
+			countDown();
+			timer = setInterval(countDown, 1000);
+		}
+    })
+	
+</script>
+</html>

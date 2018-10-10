@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../js/rem.js" ></script>
+    <title>确认借款</title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/confirmLoan.css" />
+    
+</head>
+<body>
+	<!-- <header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">确认借款</h1>
+	</header> -->
+	
+	<div class="mui-content" id="content">
+		<div class="messageList">
+			<div class="msg-item">
+				<div class="item-title">放款总额</div>
+				<div class="item-value">
+					<span><i id="loanMoney">1000</i> 元</span>
+					<span>(到账 <i id="account">800</i>) <i onclick="showQuestionDetail()" class="questionDetail">？</i></span>
+				</div>
+			</div>
+			<div class="msg-item">
+				<div class="item-title">期限</div>
+				<div class="item-value"><span id="dateNum">7</span> 天</div>
+			</div>
+			<div class="msg-item">
+				<div class="item-title">总还款金额</div>
+				<div class="item-value"><span id="backMoney">1040</span> 元</div>
+			</div>
+		</div>
+		
+		<div class="checkBoxModule mui-checkbox">
+			<input name="checkbox" id="checkboxValue" type="checkbox" checked>
+			<label class="checkboxMessage"  for="checkboxValue">我已同意并阅读<a href="#">《借款协议合同》</a></label>
+		</div>
+		
+		<div class="btnModule">
+			<button id="submitBtn" onclick="confirmLoan()">确认借款</button>
+		</div>
+		
+		<!--问题内容-->
+		<div class="mask"></div>
+		<div class="quesionModule">
+			<div class="quesionList">
+				<div class="list-item quesion-title">放款总额组成</div>
+				<div class="quesion-value"><span>用户需具备260诚信券方可最终放款，当前诚信积分60，可通过购买商品获得200诚信券。本次匹配商品为一视觉网站会员6个月</span></div>
+				<div class="list-item">
+					<span class="quesionList-item-title">一视觉网站会员6个月</span>
+					<span class="quesionList-item-value">200元</span>
+				</div>
+				<div class="list-item">
+					<span class="quesionList-item-title">到账金额</span>
+					<span class="quesionList-item-value">800元</span>
+				</div>
+				<div class="list-item">
+					<span class="quesionList-item-title">总共</span>
+					<span class="quesionList-item-value">1000元</span>
+				</div>
+			</div>
+		</div>
+		<!--问题内容-->
+		
+	</div>
+	
+</body>
+
+
+<script src="../js/mui.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+	mui.init();
+	mui('.checkBoxModule').on('change', 'input', function() {
+		if(!this.checked){
+			//没选择情况下按妞不能点击
+			$('#submitBtn').attr('disabled',true);
+		}else{
+			//可以点击
+			$('#submitBtn').attr('disabled',false);
+		}
+	});
+	
+	//隐藏问题内容弹框
+	$('.mask , .quesionModule').on("click",function(){
+		console.log('000')
+		$('.mask , .quesionModule').hide();
+	})
+	
+	//点击问号弹出问题内容
+	function showQuestionDetail() {
+		$('.mask , .quesionModule').show();
+	}
+	
+	function confirmLoan() {
+		console.log('提交')
+	}
+</script>
+</html>

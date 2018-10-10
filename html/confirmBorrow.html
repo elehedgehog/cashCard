@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../js/rem.js" ></script>
+    <title>确认借款</title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/confirmBorrow.css" />
+    
+</head>
+<body>
+	<!-- <header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">确认借款</h1>
+	</header> -->
+	
+	<div class="mui-content" id="content">
+		<div class="loadModule">
+			<div class="loadModule-title">实际到账金额</div>
+			<div class="loadModule-money"><span class="moneyValue" id="moneyValue">815</span>元</div>
+			<div class="">
+				<div class="loanMessage">
+					<span class="loanMoney">借款金额1000元</span>
+					<span class="loanTime">借款期限7天</span>
+				</div>
+				
+				<div class="repayment">到期应还本息1007.6元</div>
+			</div>
+		</div>
+		<div class="recommend">
+			<div class="recommend-title">推荐商品</div>
+			<div class="recommendValue">
+				<span>乐宝图网会员</span>
+				<span>VIP会员6个月</span>
+			</div>
+		</div>
+		<div class="checkBoxModule mui-checkbox">
+			<input name="checkbox" id="checkboxValue" type="checkbox" checked>
+			<label class="checkboxMessage"  for="checkboxValue">我同意购买乐宝图会员vip服务，费用将从借款金额中扣除。购买成功后，用户名和密码将以短信形式发送到您手机</label>
+		</div>
+		<div class="btnModule">
+			<button id="submitBtn" onclick="confirmLoan()">确认借款</button>
+		</div>
+	</div>
+	
+</body>
+
+
+<script src="../js/mui.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script>
+	mui.init();
+	mui('.checkBoxModule').on('change', 'input', function() {
+		if(!this.checked){
+			//没选择情况下按妞不能点击
+			$('#submitBtn').attr('disabled',true);
+		}else{
+			//可以点击
+			$('#submitBtn').attr('disabled',false);
+		}
+	});
+	
+	function confirmLoan() {
+		console.log('提交')
+	}
+</script>
+</html>

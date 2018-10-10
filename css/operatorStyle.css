@@ -1,0 +1,33 @@
+p,input{
+  /*margin: 0 !important;*/
+  /*padding: 0 !important;*/
+  margin-bottom: .1rem !important;
+}
+
+h1.mui-title{
+  font-weight: 500;
+}
+#content{
+  /*margin-top: 44px;*/
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+.form{
+  padding-top: 12px;
+}
+.title{
+  padding: .2rem 0;
+}
+.btn-box{
+  text-align: center;
+  margin-top: .2rem;
+}
+button{
+  width: 50%;
+  background-color: #3888FE;
+  padding: 9px 12px !important;
+  border: none;
+  color: #FFFFFF;
+  font-size: 0.3rem;
+  outline: none;
+}

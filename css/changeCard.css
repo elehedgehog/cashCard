@@ -1,0 +1,51 @@
+body{
+	background-color: #FFFFFF !important;
+	color: #333; 
+}
+.mui-bar{
+	background-color:#FFFFFF;
+}
+
+.mui-content{
+	background-color: #FFFFFF !important;
+}
+.inputListModule{
+	font-size: 0.3rem;
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 1rem;
+}
+.input-item{
+	margin-top: 0.3rem;
+}
+.input-item input{
+	width: 100%;
+	height: 0.7rem;
+	font-size: 0.30rem;
+	padding-left: 0.2rem;
+	margin-top: 0.1rem;
+	border: 1px solid #B6B6B6;
+}
+.tips{
+	margin-top: 0.3rem;
+	margin-left: 0.2rem;
+}
+.tips span{
+	color: red;
+}
+.btnModule{
+	width: 100%;
+	margin-top: 0.3rem;
+	text-align: center;
+	margin-top: 1.5rem;
+	margin-bottom: 1rem;
+}
+.btnModule button{
+	width: 50%;
+	background-color: #3888FE;
+	padding: 9px 12px !important;
+	border: none;
+	color: #FFFFFF;
+	font-size: 0.3rem;
+	outline: none;
+}

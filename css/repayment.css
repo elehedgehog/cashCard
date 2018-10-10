@@ -1,0 +1,109 @@
+.content-top{
+    height: 2.6rem;
+    background-color: #3988FF;
+    padding-top: .6rem;
+}
+.content-top .title{
+    height: .6rem;
+    line-height: .6rem;
+    font-size: .30rem;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #fff;
+}
+.content-top .money{
+    height: .6rem;
+    line-height: .6rem;
+    margin: .1rem 0;
+    font-size: .30rem;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content-top .money>span{
+    font-size: 0.56rem;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content-top .form-title{
+    font-size: .28rem;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+.content-top .form-content{
+    font-size: .28rem;
+    margin-top: .2rem;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    padding: 0 0.3rem;
+}
+.content-top .form-content span{
+    color: #fff;
+    flex: 3;
+
+}
+.borrower{
+    margin-top: .3rem;
+    padding-left: .4rem;
+    height: .8rem;
+    line-height: .8rem;
+    background-color: #fff;
+    font-size: .30rem;
+    color: #333;
+
+}
+.borrower-card{
+    margin-top: .3rem;
+    padding: .1rem 0;
+    background-color: #fff;
+
+}
+.borrower-card .card-bind{
+    height: .6rem;
+    line-height: .6rem;
+    padding-left: .4rem;
+    font-size: .26rem;
+    color: #333;
+}
+.borrower-card .card-msg{
+    height: .6rem;
+    line-height: .6rem;
+    padding-left: .4rem;
+    font-size: .30rem;
+    color: #333;
+
+}
+.borrower-card .card-msg>span{
+    
+}
+.borrower-card .card-msg>span.change-card{
+    font-size: .26rem;
+    color: #3888FE;
+    float: right;
+    margin-right: .3rem;
+}
+.button{
+    width: 100%;
+    position: absolute;
+    bottom: .8rem;
+}
+.repayment-btn{
+    width: 50%;
+    background-color: #3888FE;
+    padding: 9px 12px !important;
+    border: none;
+    color: #FFFFFF;
+    font-size: 0.3rem;
+}
